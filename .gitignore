@@ -1,0 +1,26 @@
+# Python & FastAPI
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+*.pyd
+*.pyo
+*.pyc
+# Virtual environments
+venv/
+env/.venv
+.venv/
+# Environment variables
+.env
+# OS generated files
+.DS_Store
+Thumbs.db
+# IDE / Editor
+.idea/
+.vscode/
+# Build artifacts
+build/
+dist/
+*.log
+# Node / frontend (if any)
+node_modules/
