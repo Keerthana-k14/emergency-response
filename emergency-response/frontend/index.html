@@ -3,31 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emergency Response</title>
+  <title>Emergency AI Response</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <main class="container">
     <section class="card">
-      <h1>Report an Emergency</h1>
+      <div class="header">
+        <h1>Emergency AI Triage</h1>
+        <p>Intelligent routing & dispatch via Gemini AI</p>
+      </div>
+      
       <form id="emergencyForm">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" required />
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required placeholder="John Doe" />
+        </div>
 
-        <label for="location">Location</label>
-        <input type="text" id="location" name="location" required />
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" name="location" required placeholder="123 Main St, Bengaluru" />
+        </div>
 
-        <label for="description">Description</label>
-        <textarea id="description" name="description" rows="4" required></textarea>
+        <div class="form-group">
+          <label for="description">Emergency Description</label>
+          <div style="position: relative;">
+            <textarea id="description" name="description" rows="4" required placeholder="Describe the situation..."></textarea>
+            <button type="button" id="micBtn" class="mic-btn" title="Click to speak">🎤</button>
+          </div>
+        </div>
 
-        <button type="submit">Send Report</button>
+        <button type="submit" id="submitBtn">Submit Report</button>
       </form>
-      <div id="statusMessage" class="status"></div>
+      
+      <div id="statusMessage" class="status-box"></div>
+      
+      <div style="text-align: center; margin-top: 15px;">
+        <a href="http://localhost:8000/export" class="export-btn" target="_blank">📥 Download Dataset (CSV)</a>
+      </div>
     </section>
   </main>
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>

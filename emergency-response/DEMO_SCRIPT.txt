@@ -1,0 +1,46 @@
+[0:00 — HOOK]
+When emergencies happen, every single second counts. Traditional dispatch systems rely heavily on overwhelmed human operators, which can lead to delayed responses and leave callers without immediate safety guidance. 
+
+(pause)
+
+[0:20 — WHAT IT IS]
+I built the Emergency AI Response System to solve this. It's a real-time, multi-agent triage and dispatch platform built for the "Agents for Good" track. It uses the Google ADK and Gemini to instantly process emergencies, dispatch specialized units simultaneously, and give callers life-saving instructions while they wait.
+
+(pause)
+
+[0:40 — SHOW THE BANNER]
+(show assets/cover_page_banner.png)
+At a glance, it's an automated, highly intelligent simulation with voice input and multi-agent routing. 
+
+(pause)
+
+[1:00 — ARCHITECTURE]
+(show assets/architecture_diagram.png)
+Here's how it works under the hood. 
+First, a human provides their emergency via voice or text through the FastAPI backend. 
+That input goes directly to the Orchestrator Agent, which acts as the core triage unit to determine severity and the required response type. 
+Instead of bottlenecking, the Orchestrator simultaneously routes to specialized sub-agents: the Ambulance Agent, Fire Agent, Police Agent, and Hospital Coordinator. 
+At the exact same time, it routes to a unique Instruction Agent, which formulates real-time first aid steps. 
+All of these agents write their actions to a shared state, which is streamed directly back to the human as a live simulation timeline.
+
+(pause)
+
+[2:00 — LIVE DEMO]
+(switch to web app at localhost:3000)
+Let's see it in action. I'm going to use the voice input to submit a severe medical emergency. 
+(click microphone and say: "My father just collapsed, he is clutching his chest and not breathing properly!")
+
+As we submit the report, watch the live simulation dashboard. The Orchestrator immediately flags this as a HIGH severity medical emergency. 
+Next, you can see the Ambulance Agent and Hospital Coordinator dispatching units in parallel with their ETAs. 
+Finally, while we wait, the Instruction Agent flashes a warning box with critical, immediate steps: "Check for a pulse, begin CPR, and stay on the line."
+
+(pause)
+
+[3:00 — LOGGING & EXPORT]
+To make this system robust and ready for Kaggle evaluation, every single interaction, AI triage decision, and agent action is securely logged into a backend SQLite database. 
+You can pull the entire operational dataset on-demand via a CSV export endpoint to analyze response times and accuracy.
+
+(pause)
+
+[3:30 — IMPACT / CLOSE]
+By automating the initial triage and parallelizing the dispatch process, we can significantly reduce the latency of emergency services. More importantly, providing immediate, AI-driven survival instructions ensures that the "treatment" phase begins before the ambulance even arrives. Thank you.
