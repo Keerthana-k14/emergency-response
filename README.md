@@ -52,7 +52,7 @@ graph TD
 
 Below is the logical flow diagram outlining the triage decision trees and routing execution:
 
-![Flow Chart](stripped_images/flow.png)
+![Flow Chart](emergency-response/stripped_images/flow.png)
 
 1. **Intake / GPS Node:** Captures location coordinates and processes live voice/text emergency inputs.
 2. **Coordinator Agent:** Dynamically processes the report, classifies emergency type/severity, and routes assignments.
