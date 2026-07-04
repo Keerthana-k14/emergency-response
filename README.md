@@ -50,13 +50,46 @@ graph TD
 
 ## 📊 Logical Flow Chart
 
-Below is the logical flow diagram outlining the triage decision trees and routing execution:
+Below is the logical flow diagram representing the decision-making logic and routing execution for a concrete emergency scenario (e.g., *“Fire at college, people are injured and trapped”*):
 
-![Flow Chart](emergency-response/stripped_images/flow.png)
+```mermaid
+flowchart TD
+    %% Define Styles
+    classDef startEnd fill:#00f0ff,stroke:#00f0ff,stroke-width:2px,color:#050b14;
+    classDef step fill:#1e293b,stroke:#00f0ff,stroke-width:1px,color:#e0f2fe;
+    classDef decision fill:#ffbd2e,stroke:#ffbd2e,stroke-width:1.5px,color:#050b14;
+    classDef action fill:#ff003c,stroke:#ff003c,stroke-width:1.5px,color:#fff;
 
-1. **Intake / GPS Node:** Captures location coordinates and processes live voice/text emergency inputs.
-2. **Coordinator Agent:** Dynamically processes the report, classifies emergency type/severity, and routes assignments.
-3. **Logistics Swarm:** Fire, Ambulance, Police, and Hospital agents autonomously generate situational action plans and estimate ETAs using Gemini.
+    Start([⚡ SOS Incident Received: 'Fire at BNMIT, people injured']):::startEnd --> STT[Convert Speech to Text & Parse GPS Location]:::step
+    STT --> Coord[Coordinator Agent Triages Situation & Determines Swarm Route]:::step
+    
+    %% Decision Nodes
+    Coord --> DecFire{Is there an active fire?}:::decision
+    Coord --> DecInj{Are there injured casualties?}:::decision
+    Coord --> DecCrowd{Is crowd/traffic control needed?}:::decision
+    
+    %% Fire Branch
+    DecFire -->|YES| DispatchFire[Dispatch Fire Agent]:::step
+    DispatchFire --> PlanFire[Fire AI Plan: Deploy Engine 4, Aerial Ladder, Paramedics]:::action
+    
+    %% Medical/Hospital Branch
+    DecInj -->|YES| DispatchMed[Dispatch Ambulance & Hospital Agents]:::step
+    DispatchMed --> PlanAmb[Ambulance AI Plan: Deploy Paramedics & Trauma Units]:::action
+    DispatchMed --> PlanHosp[Hospital AI Plan: Trigger Mass Casualty Protocol, Prep ER Trauma Bays]:::action
+    
+    %% Police Branch
+    DecCrowd -->|YES| DispatchPol[Dispatch Police Agent]:::step
+    DispatchPol --> PlanPol[Police AI Plan: Cordon Perimeter, Override Traffic Signals]:::action
+    
+    %% Joint Consolidation
+    PlanFire & PlanAmb & PlanHosp & PlanPol --> Consol[Coordinator Consolidates Swarm Plans & ETAs]:::step
+    Consol --> Safety[Generate Live Safety Instructions for Bystanders]:::step
+    Safety --> End([🏁 Dispatch Swarm Dispatched & Operational HUD Activated]):::startEnd
+```
+
+1. **Intake & Triage:** The coordinator parses the input text/speech and identifies the severity and incident types (Mixed: Fire + Medical).
+2. **Dynamic Routing:** Parallel nodes are triggered in the graph execution to allocate tasks to relevant departments.
+3. **Execution Plan:** Each department calculates its individual ETA and action plan, returning a unified command sheet back to the supervisor dashboard.
 
 ---
 
