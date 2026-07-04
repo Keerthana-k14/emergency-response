@@ -52,7 +52,7 @@ def orchestrator_logic(ctx, report: str) -> str:
     
     try:
         response = client.models.generate_content(
-            model='gemini-2.5-flash-lite',
+            model='gemini-2.5-flash',
             contents=prompt,
             config={
                 'response_mime_type': 'application/json',
@@ -110,7 +110,7 @@ def responder_agent_logic(agency_name: str, ctx) -> str | None:
     
     try:
         response = client.models.generate_content(
-            model='gemini-2.5-flash-lite',
+            model='gemini-2.5-flash',
             contents=prompt,
             config={
                 'response_mime_type': 'application/json',
@@ -164,7 +164,7 @@ def instruction_logic(ctx) -> str | None:
     
     try:
         response = client.models.generate_content(
-            model='gemini-2.5-flash-lite',
+            model='gemini-2.5-flash',
             contents=prompt,
             config={
                 'response_mime_type': 'application/json',

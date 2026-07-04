@@ -3,49 +3,230 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emergency AI Response</title>
+  <title>PulseNet Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
-  <main class="container">
-    <section class="card">
-      <div class="header">
-        <h1>Emergency AI Triage</h1>
-        <p>Intelligent routing & dispatch via Gemini AI</p>
+  
+  <div class="ambient-background"></div>
+
+  <div class="dashboard">
+    <header class="top-bar">
+      <div class="logo">
+        <span class="pulse-dot"></span>
+        <h2>PulseNet<span> AI</span></h2>
       </div>
-      
-      <form id="emergencyForm">
-        <div class="form-group">
-          <label for="name">Your Name</label>
-          <input type="text" id="name" name="name" required placeholder="John Doe" />
-        </div>
+      <div class="status-indicator">
+        <span class="status-text">GLOBAL OVERWATCH ONLINE</span>
+      </div>
+    </header>
 
-        <div class="form-group">
-          <label for="location">Location</label>
-          <input type="text" id="location" name="location" required placeholder="123 Main St, Bengaluru" />
-        </div>
-
-        <div class="form-group">
-          <label for="description">Emergency Description</label>
-          <div style="position: relative;">
-            <textarea id="description" name="description" rows="4" required placeholder="Describe the situation..."></textarea>
-            <button type="button" id="micBtn" class="mic-btn" title="Click to speak">🎤</button>
+    <main class="main-content">
+      <!-- Left Column -->
+      <div class="left-column">
+        <!-- Intake Form -->
+        <section class="intake-pane glass-panel">
+          <div class="panel-header">
+            <h3>Emergency Intake</h3>
           </div>
-        </div>
+          
+          <form id="emergencyForm">
+            <div class="form-group input-glow">
+              <label for="name">Reporter ID</label>
+              <input type="text" id="name" name="name" required placeholder="Enter Name or ID" value="Dispatcher_1" />
+            </div>
 
-        <button type="submit" id="submitBtn">Submit Report</button>
-      </form>
-      
-      <div id="statusMessage" class="status-box"></div>
-      
-      <div style="text-align: center; margin-top: 15px;">
-        <a href="http://localhost:8000/export" class="export-btn" target="_blank">📥 Download Dataset (CSV)</a>
+            <div class="form-group input-glow">
+              <label for="location">Coordinates</label>
+              <input type="text" id="location" name="location" required placeholder="e.g., Sector 4, Main Ave" value="Central Station" />
+            </div>
+
+            <div class="form-group input-glow">
+              <label for="description">Situation Report</label>
+              <div style="position: relative;">
+                <textarea id="description" name="description" rows="4" required placeholder="Describe the critical event or use the mic..."></textarea>
+                <button type="button" id="micBtn" class="mic-btn" title="Voice Input">🎤</button>
+              </div>
+              <div id="liveTranscript" class="live-transcript"></div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="cyber-btn">
+              <span class="btn-text">INITIATE SWARM</span>
+            </button>
+          </form>
+
+          <div id="instructionsPanel" class="instructions-panel hidden">
+            <h4>⚠️ Action Required</h4>
+            <ul id="instructionsList"></ul>
+          </div>
+        </section>
+
+        <!-- Terminal Log -->
+        <section class="terminal-log glass-panel">
+          <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="term-title">Swarm Feed >_</span>
+          </div>
+          <div id="logContent" class="terminal-content">
+            <div class="log-entry system">System initialized. Awaiting SOS payload...</div>
+          </div>
+        </section>
       </div>
-    </section>
-  </main>
-  <script src="app.js?v=3"></script>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <!-- Graph Visualization -->
+        <section class="network-graph glass-panel">
+          <div class="graph-title">Neural Swarm Topology</div>
+          
+          <div class="nodes-container">
+            <!-- Connecting SVG Lines (ViewBox used for scaling) -->
+            <svg class="connection-lines" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+                <filter id="glow-red">
+                  <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              
+              <!-- Paths -->
+              <path id="path-user-coord" class="conn-path" d="M 150,200 C 250,200 250,200 350,200" />
+              <path id="path-coord-fire" class="conn-path" d="M 450,200 C 550,200 600,100 700,100" />
+              <path id="path-coord-amb" class="conn-path" d="M 450,200 C 550,200 600,180 700,180" />
+              <path id="path-coord-pol" class="conn-path" d="M 450,200 C 550,200 600,260 700,260" />
+              <path id="path-coord-hosp" class="conn-path" d="M 450,200 C 550,200 600,340 700,340" />
+
+              <!-- Animated Packets (Hidden initially) -->
+              <g id="pkt-user-coord" class="packet hidden pkt-to-coord">
+                <rect x="-40" y="-12" width="80" height="24" rx="12" fill="rgba(0, 240, 255, 0.8)" filter="url(#glow)"/>
+                <text x="0" y="3" text-anchor="middle" font-size="10" fill="#fff" font-family="monospace" font-weight="bold">SOS_DATA</text>
+              </g>
+
+              <g id="pkt-coord-fire" class="packet hidden pkt-to-fire">
+                <rect x="-40" y="-12" width="80" height="24" rx="12" fill="rgba(255, 0, 60, 0.8)" filter="url(#glow-red)"/>
+                <text x="0" y="3" text-anchor="middle" font-size="10" fill="#fff" font-family="monospace" font-weight="bold">DISPATCH</text>
+              </g>
+
+              <g id="pkt-coord-amb" class="packet hidden pkt-to-amb">
+                <rect x="-40" y="-12" width="80" height="24" rx="12" fill="rgba(255, 0, 60, 0.8)" filter="url(#glow-red)"/>
+                <text x="0" y="3" text-anchor="middle" font-size="10" fill="#fff" font-family="monospace" font-weight="bold">DISPATCH</text>
+              </g>
+
+              <g id="pkt-coord-pol" class="packet hidden pkt-to-pol">
+                <rect x="-40" y="-12" width="80" height="24" rx="12" fill="rgba(255, 189, 46, 0.8)" filter="url(#glow)"/>
+                <text x="0" y="3" text-anchor="middle" font-size="10" fill="#fff" font-family="monospace" font-weight="bold">DISPATCH</text>
+              </g>
+
+              <g id="pkt-coord-hosp" class="packet hidden pkt-to-hosp">
+                <rect x="-40" y="-12" width="80" height="24" rx="12" fill="rgba(0, 240, 255, 0.8)" filter="url(#glow)"/>
+                <text x="0" y="3" text-anchor="middle" font-size="10" fill="#fff" font-family="monospace" font-weight="bold">ALERT</text>
+              </g>
+            </svg>
+
+            <!-- Nodes (Positioned via absolute % relative to container) -->
+            <div class="node user-node" id="node-user" style="top: 50%; left: 10%;">
+              <div class="gps-radar">
+                <div class="radar-ping"></div>
+                <div class="radar-ping delay"></div>
+                <div class="node-icon">📍</div>
+              </div>
+              <span>User GPS</span>
+            </div>
+
+            <div class="node coord-node" id="node-coord" style="top: 50%; left: 40%;">
+              <div class="node-ring"></div>
+              <div class="node-icon">🧠</div>
+              <span>Coordinator</span>
+            </div>
+
+            <div class="node agent-node" id="node-fire" style="top: 25%; left: 75%;">
+              <div class="node-icon">🔥</div>
+              <span>Fire AI</span>
+            </div>
+
+            <div class="node agent-node" id="node-amb" style="top: 45%; left: 75%;">
+              <div class="node-icon">🚑</div>
+              <span>Ambulance AI</span>
+            </div>
+
+            <div class="node agent-node" id="node-pol" style="top: 65%; left: 75%;">
+              <div class="node-icon">🚓</div>
+              <span>Police AI</span>
+            </div>
+
+            <div class="node agent-node" id="node-hosp" style="top: 85%; left: 75%;">
+              <div class="node-icon">🏥</div>
+              <span>Hospital AI</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Agent Perspectives Grid -->
+        <section class="agent-consoles glass-panel">
+          <div class="graph-title">Field Agent POVs</div>
+          <div class="consoles-grid">
+            
+            <!-- Fire POV -->
+            <div class="console-card" id="console-fire">
+              <div class="console-header fire-head">🔥 Fire Dept Terminal</div>
+              <div class="console-body">
+                <div class="data-row"><span>Status:</span> <span class="val status-val">Standby</span></div>
+                <div class="data-row"><span>Engine:</span> <span class="val route-val">--</span></div>
+                <div class="data-row"><span>ETA:</span> <span class="val eta-val">--</span></div>
+              </div>
+            </div>
+
+            <!-- Ambulance POV -->
+            <div class="console-card" id="console-amb">
+              <div class="console-header amb-head">🚑 Ambulance Dash</div>
+              <div class="console-body">
+                <div class="data-row"><span>Status:</span> <span class="val status-val">Standby</span></div>
+                <div class="data-row"><span>Route:</span> <span class="val route-val">--</span></div>
+                <div class="data-row"><span>ETA:</span> <span class="val eta-val">--</span></div>
+              </div>
+            </div>
+
+            <!-- Police POV -->
+            <div class="console-card" id="console-pol">
+              <div class="console-header pol-head">🚓 Police Grid Auth</div>
+              <div class="console-body">
+                <div class="data-row"><span>Status:</span> <span class="val status-val">Patrol</span></div>
+                <div class="data-row"><span>Units:</span> <span class="val units-val">0 Active</span></div>
+                <div class="data-row"><span>ETA:</span> <span class="val eta-val">--</span></div>
+              </div>
+            </div>
+
+            <!-- Hospital POV -->
+            <div class="console-card" id="console-hosp">
+              <div class="console-header hosp-head">🏥 ER Terminal</div>
+              <div class="console-body">
+                <div class="data-row"><span>Status:</span> <span class="val status-val">Normal Ops</span></div>
+                <div class="data-row"><span>Incoming:</span> <span class="val patient-val">0</span></div>
+                <div class="data-row"><span>Prep Required:</span> <span class="val prep-val">None</span></div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js?v=6"></script>
 </body>
 </html>
