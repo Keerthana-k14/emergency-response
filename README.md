@@ -46,7 +46,9 @@ graph TD
     B -->|Log Incident Summary| H
 ```
 
-### Flow Chart & Logic Paths
+---
+
+## 📊 Logical Flow Chart
 
 Below is the logical flow diagram outlining the triage decision trees and routing execution:
 
