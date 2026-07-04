@@ -4,13 +4,21 @@ RespondAI is an autonomous, decentralized multi-agent emergency response swarm d
 
 ---
 
-## 🚀 Key Features
+## 📌 The Problem
 
-* **Multi-Agent Orchestration:** Uses a central Coordinator Agent to parse emergency intake reports and dynamically route task payloads to specialized domain agents (Fire, Police, EMS, and Hospital).
-* **Neural Swarm Visualizer:** A high-tech frontend interface built with SVG/CSS that illustrates real-time data packets traveling between agents as they communicate and resolve tasks.
-* **Role-Specific POVs:** Dynamic mini-consoles that update instantly from each agent's perspective (e.g., showing the route/ETA on the Ambulance dash, or ER readiness state on the Hospital terminal).
-* **Live Speech-to-Text Intake:** Integrated Web Speech API support that transcribes voice emergencies in real-time, giving dispatchers a hands-free HUD.
-* **High-Performance Infrastructure:** Powered by FastAPI, Google GenAI SDK, and managed with `uv` for lightning-fast python environments.
+In emergency response systems (911 dispatch, disaster relief), seconds save lives. However, legacy systems suffer from:
+1. **Manual Triage Latency:** Dispatchers must manually assess reports, leading to bottlenecks during multi-casualty incidents.
+2. **Resource Fragmentation:** Medical, fire, and police agencies operate on siloed communication channels, delaying coordination.
+3. **Information Asymmetry:** First responders often navigate to scenes without real-time, consolidated context regarding patient status or hazards.
+
+---
+
+## 💡 The Solution
+
+RespondAI solves this by introducing a **decentralized, parallelized multi-agent cognitive swarm**:
+* **Parallel Dispatch:** Within milliseconds of receiving a situation report (via text or voice), our Coordinator Agent determines the hazard severity and concurrently dispatches all required logistics agents.
+* **Autonomous Decision-Making:** Each field agent (Ambulance, Hospital, Police, Fire) runs its own cognitive model to dynamically formulate custom action plans, establish staging locations, and calculate ETAs based on the emergency context.
+* **Interactive Overwatch:** A high-fidelity, real-time dashboard visualizes the data packets moving between agents, giving supervisors total operational clarity.
 
 ---
 
@@ -38,8 +46,14 @@ graph TD
     B -->|Log Incident Summary| H
 ```
 
-1. **Intake / GPS Node:** captures location coordinates and audio descriptions.
-2. **Coordinator Agent:** dynamically processes the report, classifies emergency type/severity, and routes assignments.
+### Flow Chart & Logic Paths
+
+Below is the logical flow diagram outlining the triage decision trees and routing execution:
+
+![Flow Chart](stripped_images/flow.png)
+
+1. **Intake / GPS Node:** Captures location coordinates and processes live voice/text emergency inputs.
+2. **Coordinator Agent:** Dynamically processes the report, classifies emergency type/severity, and routes assignments.
 3. **Logistics Swarm:** Fire, Ambulance, Police, and Hospital agents autonomously generate situational action plans and estimate ETAs using Gemini.
 
 ---
@@ -49,7 +63,7 @@ graph TD
 * **Backend:** FastAPI (Python), Google GenAI SDK (`gemini-2.5-flash`)
 * **Frontend:** Glassmorphism UI (Vanilla HTML5/CSS3/JavaScript)
 * **Environment Manager:** `uv` (Fast Python packaging)
-* **Database:** SQLite (Stores audit logs and exported CSV incident reports)
+* **Database:** SQLite (Stores audit logs and exported CSV incident reports for Kaggle validation)
 
 ---
 
