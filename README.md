@@ -16,17 +16,26 @@ RespondAI is an autonomous, decentralized multi-agent emergency response swarm d
 
 ## 🛠️ System Architecture
 
-RespondAI uses a directed workflow graph to triage and dispatch resources:
+RespondAI utilizes a directed workflow graph built on Google's ADK (Agent Development Kit) framework to orchestrate real-time response:
 
-```
-          [User GPS (Intake)]
-                  │
-                  ▼ (SOS_DATA Payload)
-         [Coordinator Agent]
-          /     │     │     \
-         /      │     │      \ (Dispatch Actions)
-        ▼       ▼     ▼       ▼
-     [Fire]   [EMS] [Police] [Hospital]
+```mermaid
+graph TD
+    classDef userNode fill:#00f0ff,stroke:#00f0ff,stroke-width:2px,color:#050b14;
+    classDef coordNode fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff;
+    classDef agentNode fill:#1e293b,stroke:#00f0ff,stroke-width:1px,color:#e0f2fe;
+    classDef dbNode fill:#0f172a,stroke:#39ff14,stroke-width:1px,color:#39ff14;
+
+    A[📍 User GPS Intake]:::userNode -->|Speech-to-Text / SOS Payload| B[🧠 Coordinator Agent]:::coordNode
+    
+    B -->|Triage Decision| C[🔥 Fire AI Agent]:::agentNode
+    B -->|Triage Decision| D[🚑 Ambulance AI Agent]:::agentNode
+    B -->|Triage Decision| E[🚓 Police AI Agent]:::agentNode
+    B -->|Triage Decision| F[🏥 Hospital AI Agent]:::agentNode
+    
+    B -->|Generate Real-Time Safety Guides| G[⚠️ Bystander Instructions]:::userNode
+    
+    C & D & E & F -->|Formulate Role-Specific Action Plan & ETAs| H[(🗄️ SQLite Log Database)]:::dbNode
+    B -->|Log Incident Summary| H
 ```
 
 1. **Intake / GPS Node:** captures location coordinates and audio descriptions.
